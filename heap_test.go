@@ -93,7 +93,7 @@ func Test_Remove(t *testing.T) {
 	for _, item := range items {
 		h.Push(item)
 	}
-	h.Remove(&testItem{8, 19})
+	h.Remove(8)
 	if h.Len() != len(items)-1 || len(h.positions) != len(items)-1 {
 		t.Errorf("expect heap size: %d, got: %d, %d", len(items)-1, h.Len(), len(h.positions))
 	}
@@ -111,5 +111,15 @@ func Test_NilPushRemove(t *testing.T) {
 	if h.Len() != 0 {
 		t.Errorf("expect nil is not inserted")
 	}
-	h.Remove(nil)
+	h.Remove(0)
+}
+
+func Test_SameIDs(t *testing.T) {
+	h := NewHeap()
+	for i := 0; i < 3; i++ {
+		h.Push(&testItem{id: 0, value: 10 + i})
+	}
+	if h.Len() != 1 {
+		t.Errorf("item of same id should replace old item, expect: %d, got: %d", 1, h.Len())
+	}
 }

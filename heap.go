@@ -21,6 +21,9 @@ func (h *Heap) Push(item Item) {
 	if item == nil {
 		return
 	}
+	if _, ok := h.positions[item.ID()]; ok {
+		h.Remove(item.ID())
+	}
 	h.items = append(h.items, item)
 	h.positions[item.ID()] = h.Len() - 1
 	h.siftUp(h.Len() - 1)
@@ -51,17 +54,14 @@ func (h *Heap) swap(i, j int) {
 	h.items[i], h.items[j] = h.items[j], h.items[i]
 }
 
-func (h *Heap) Remove(item Item) {
-	if item == nil {
-		return
-	}
-	p, ok := h.positions[item.ID()]
+func (h *Heap) Remove(id int) {
+	p, ok := h.positions[id]
 	if !ok {
 		return
 	}
 	h.swap(p, h.Len()-1)
 	h.items = h.items[:h.Len()-1]
-	delete(h.positions, item.ID())
+	delete(h.positions, id)
 	h.siftDown(p)
 	h.siftUp(p)
 }
@@ -87,8 +87,8 @@ func (h *Heap) Pop() Item {
 	if h.Len() == 0 {
 		return nil
 	}
-	result := h.items[0]
-	h.Remove(result)
+	result := h.items[0] // nil is not inserted
+	h.Remove(result.ID())
 	return result
 }
 
