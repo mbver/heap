@@ -18,6 +18,9 @@ func NewHeap() *Heap {
 }
 
 func (h *Heap) Push(item Item) {
+	if item == nil {
+		return
+	}
 	h.items = append(h.items, item)
 	h.positions[item.ID()] = h.Len() - 1
 	h.siftUp(h.Len() - 1)
@@ -49,6 +52,9 @@ func (h *Heap) swap(i, j int) {
 }
 
 func (h *Heap) Remove(item Item) {
+	if item == nil {
+		return
+	}
 	p, ok := h.positions[item.ID()]
 	if !ok {
 		return

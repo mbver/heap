@@ -18,7 +18,7 @@ func (i *testItem) Less(item Item) bool {
 	return i.value < i1.value
 }
 
-func TestHeap_PushPop(t *testing.T) {
+func Test_PushPop(t *testing.T) {
 	items := []*testItem{
 		{1, 10},
 		{2, 30},
@@ -54,7 +54,7 @@ func TestHeap_PushPop(t *testing.T) {
 	}
 }
 
-func TestHeap_EmptyHeap(t *testing.T) {
+func Test_EmptyHeap(t *testing.T) {
 	h := NewHeap()
 	item := h.Pop()
 	if item != nil {
@@ -66,7 +66,7 @@ func TestHeap_EmptyHeap(t *testing.T) {
 	}
 }
 
-func TestHeap_Remove(t *testing.T) {
+func Test_Remove(t *testing.T) {
 	items := []*testItem{
 		{1, 10},
 		{2, 30},
@@ -103,4 +103,13 @@ func TestHeap_Remove(t *testing.T) {
 			t.Errorf("pop item: expected: %v, got: %v", item, item1)
 		}
 	}
+}
+
+func Test_NilPushRemove(t *testing.T) {
+	h := NewHeap()
+	h.Push(nil)
+	if h.Len() != 0 {
+		t.Errorf("expect nil is not inserted")
+	}
+	h.Remove(nil)
 }
