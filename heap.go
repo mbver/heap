@@ -1,19 +1,19 @@
 package heap
 
 type Item interface {
-	ID() int
+	ID() uint64
 	Less(Item) bool
 }
 
 type Heap struct {
 	items     []Item
-	positions map[int]int
+	positions map[uint64]int
 }
 
 func NewHeap() *Heap {
 	return &Heap{
 		items:     []Item{},
-		positions: map[int]int{},
+		positions: map[uint64]int{},
 	}
 }
 
@@ -54,7 +54,7 @@ func (h *Heap) swap(i, j int) {
 	h.items[i], h.items[j] = h.items[j], h.items[i]
 }
 
-func (h *Heap) Remove(id int) {
+func (h *Heap) Remove(id uint64) {
 	p, ok := h.positions[id]
 	if !ok {
 		return

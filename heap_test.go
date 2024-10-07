@@ -5,11 +5,11 @@ import (
 )
 
 type testItem struct {
-	id    int
+	id    uint64
 	value int
 }
 
-func (i *testItem) ID() int {
+func (i *testItem) ID() uint64 {
 	return i.id
 }
 
